@@ -1,13 +1,19 @@
 import pandas as pd
 import tensorflow as tf
 
-TRAIN_URL = "http://download.tensorflow.org/data/iris_training.csv"
-TEST_URL = "http://download.tensorflow.org/data/iris_test.csv"
 
+
+########################################## Need to change to our params
 CSV_COLUMN_NAMES = ['SepalLength', 'SepalWidth',
                     'PetalLength', 'PetalWidth', 'Species']
 SPECIES = ['Benign', 'Cancerous']
+###############################################################################################
 
+
+
+
+########################################## The following two functions will be replaced by one function,
+########################################## which pulls the data from two CSVs in the parent directory
 def maybe_download():
     train_path = tf.keras.utils.get_file(TRAIN_URL.split('/')[-1], TRAIN_URL)
     test_path = tf.keras.utils.get_file(TEST_URL.split('/')[-1], TEST_URL)
@@ -26,7 +32,7 @@ def load_data(y_name='Species'):
 
     return (train_x, train_y), (test_x, test_y)
 
-
+########################################################################################################
 def train_input_fn(features, labels, batch_size):
     """An input function for training"""
     # Convert the inputs to a Dataset.
@@ -64,8 +70,10 @@ def eval_input_fn(features, labels, batch_size):
 
 # `tf.parse_csv` sets the types of the outputs to match the examples given in
 #     the `record_defaults` argument.
-CSV_TYPES = [[0.0], [0.0], [0.0], [0.0], [0]]
 
+########################################## need to convert to OUR column types
+CSV_TYPES = [[0.0], [0.0], [0.0], [0.0], [0]]
+#############################################################################
 def _parse_line(line):
     # Decode the line into its fields
     fields = tf.decode_csv(line, record_defaults=CSV_TYPES)
