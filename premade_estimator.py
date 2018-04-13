@@ -44,7 +44,7 @@ def main(argv):
         # Two hidden layers of 10 nodes each.
         hidden_units=[10, 10],
         # The model must choose between 3 classes.
-        n_classes=3)
+        n_classes=2)
 
     # Train the Model.
     classifier.train(
@@ -60,12 +60,43 @@ def main(argv):
     print('\nTest set accuracy: {accuracy:0.3f}\n'.format(**eval_result))
 
     # Generate predictions from the model
-    expected = ['Setosa', 'Versicolor', 'Virginica']
+    # have to come out with own data for prediction and their expected outcome
+    # maybe can grab 3 from the data to be used for this
+    #expected = ['Setosa', 'Versicolor', 'Virginica']
+    
+    expected = ['M', 'M', 'B']
     predict_x = {
-        'SepalLength': [5.1, 5.9, 6.9],
-        'SepalWidth': [3.3, 3.0, 3.1],
-        'PetalLength': [1.7, 4.2, 5.4],
-        'PetalWidth': [0.5, 1.5, 2.1],
+        'id':[926954, 927241, 92751], 
+        'radius_mean':[16.6, 20.6, 7.76],
+        'texture_mean':[28.08, 29.33, 24.54],
+        'perimeter_mean':[108.3, 140.1, 47.92],
+        'area_mean':[858.1, 1265, 181],
+        'smoothness_mean':[0.08455, 0.1178, 0.05263], 
+        'compactness_mean':[0.1023, 0.277, 0.04362],
+        'concavity_mean':[0.09251, 0.3514, 0],
+        'concave_points_mean':[0.05302, 0.152, 0],
+        'symmetry_mean':[0.159, 0.2397, 0.1587],
+        'fractal_dimension_mean':[0.05648, 0.07016, 0.05884],
+        'radius_se':[0.4564, 0.726, 0.3857],
+        'texture_se':[1.075, 1.595, 1.428],
+        'perimeter_se':[3.425, 5.772, 2.548],
+        'area_se':[48.55, 86.22, 19.15],
+        'smoothness_se':[0.005903, 0.006522, 0.007189],
+        'compactness_se':[0.03731, 0.06158, 0.00466],
+        'concavity_se':[0.0473, 0.07117, 0],
+        'concave_points_se':[0.01557, 0.01664, 0],
+        'symmetry_se':[0.01318, 0.02324, 0.02676],
+        'fractal_dimension_se':[0.003892, 0.006185, 0.002783],
+        'radius_worst':[18.98, 25.74, 9.456],
+        'texture_worst':[34.12, 39.42, 30.37],
+        'perimeter_worst':[126.7, 184.6, 59.16],
+        'area_worst':[1124, 1821, 268.6],
+        'smoothness_worst':[0.1139, 0.165, 0.08996],
+        'compactness_worst':[0.3094, 0.8681, 0.06444],
+        'concavity_worst':[0.3403, 0.9387, 0],
+        'concave_points_worst':[0.1418, 0.265, 0],
+        'symmetry_worst':[0.2218, 0.4087, 0.2871],
+        'fractal_dimension_worst':[0.0782, 0.124, 0.07039]
     }
 
     predictions = classifier.predict(
@@ -79,7 +110,7 @@ def main(argv):
         class_id = pred_dict['class_ids'][0]
         probability = pred_dict['probabilities'][class_id]
 
-        print(template.format(iris_data.SPECIES[class_id],
+        print(template.format(iris_data.DIAGNOSIS[class_id],
                               100 * probability, expec))
 
 

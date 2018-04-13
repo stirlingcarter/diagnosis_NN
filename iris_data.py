@@ -4,9 +4,13 @@ import tensorflow as tf
 
 
 ########################################## Need to change to our params
-CSV_COLUMN_NAMES = ['SepalLength', 'SepalWidth',
-                    'PetalLength', 'PetalWidth', 'Species']
-SPECIES = ['Benign', 'Cancerous']
+
+CSV_COLUMN_NAMES = ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 
+                    'compactness_mean', 'concavity_mean', 'concave_points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se',
+                    'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave_points_se', 'symmetry_se',
+                    'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst',
+                    'concavity_worst', 'concave_points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+DIAGNOSIS = ['M', 'B']
 ###############################################################################################
 
 
@@ -15,12 +19,14 @@ SPECIES = ['Benign', 'Cancerous']
 ########################################## The following two functions will be replaced by one function,
 ########################################## which pulls the data from two CSVs in the parent directory
 def maybe_download():
-    train_path = tf.keras.utils.get_file(TRAIN_URL.split('/')[-1], TRAIN_URL)
-    test_path = tf.keras.utils.get_file(TEST_URL.split('/')[-1], TEST_URL)
+    #train_path = tf.keras.utils.get_file(TRAIN_URL.split('/')[-1], TRAIN_URL)
+    #test_path = tf.keras.utils.get_file(TEST_URL.split('/')[-1], TEST_URL)
+    train_path = './traindata.csv'
+    test_path = './testdata.csv'
 
     return train_path, test_path
 
-def load_data(y_name='Species'):
+def load_data(y_name='diagnosis'):
     """Returns the iris dataset as (train_x, train_y), (test_x, test_y)."""
     train_path, test_path = maybe_download()
 
@@ -72,7 +78,9 @@ def eval_input_fn(features, labels, batch_size):
 #     the `record_defaults` argument.
 
 ########################################## need to convert to OUR column types
-CSV_TYPES = [[0.0], [0.0], [0.0], [0.0], [0]]
+CSV_TYPES = [[0],[0.0],[0.0],[0.0],[0.0],[0.0],[0.0], [0.0], [0.0], [0.0],[0.0],
+                [0.0],[0.0],[0.0],[0.0],[0.0],[0.0], [0.0], [0.0], [0.0],[0.0],
+                [0.0],[0.0],[0.0],[0.0],[0.0],[0.0], [0.0], [0.0], [0.0],[0.0], [0]]
 #############################################################################
 def _parse_line(line):
     # Decode the line into its fields
@@ -82,7 +90,7 @@ def _parse_line(line):
     features = dict(zip(CSV_COLUMN_NAMES, fields))
 
     # Separate the label from the features
-    label = features.pop('Species')
+    label = features.pop('diagnosis')
 
     return features, label
 
