@@ -19,7 +19,7 @@ from __future__ import print_function
 import argparse
 import tensorflow as tf
 
-import iris_data
+import cancer_data
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--batch_size', default=100, type=int, help='batch size')
@@ -73,7 +73,7 @@ def main(argv):
     args = parser.parse_args(argv[1:])
 
     # Fetch the data
-    (train_x, train_y), (test_x, test_y) = iris_data.load_data()
+    (train_x, train_y), (test_x, test_y) = cancer_data.load_data()
 
     # Feature columns describe how to use the input.
     my_feature_columns = []
@@ -93,12 +93,12 @@ def main(argv):
 
     # Train the Model.
     classifier.train(
-        input_fn=lambda:iris_data.train_input_fn(train_x, train_y, args.batch_size),
+        input_fn=lambda:cancer_data.train_input_fn(train_x, train_y, args.batch_size),
         steps=args.train_steps)
 
     # Evaluate the model.
     eval_result = classifier.evaluate(
-        input_fn=lambda:iris_data.eval_input_fn(test_x, test_y, args.batch_size))
+        input_fn=lambda:cancer_data.eval_input_fn(test_x, test_y, args.batch_size))
 
     print('\nTest set accuracy: {accuracy:0.3f}\n'.format(**eval_result))
 
@@ -122,7 +122,7 @@ def main(argv):
         class_id = pred_dict['class_ids'][0]
         probability = pred_dict['probabilities'][class_id]
 
-        print(template.format(iris_data.SPECIES[class_id],
+        print(template.format(cancer_data.SPECIES[class_id],
                               100 * probability, expec))
 
 
