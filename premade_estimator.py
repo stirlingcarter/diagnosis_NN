@@ -11,7 +11,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-"""An Example of a DNNClassifier for the Iris dataset."""
+"""An Example of a DNNClassifier for the Cancer dataset."""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -41,7 +41,7 @@ def main(argv):
     classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
         # Two hidden layers of 10 nodes each.
-        hidden_units=[100, 100],
+        hidden_units=[10, 10],
         # The model must choose between 3 classes.
         n_classes=2)
 
@@ -65,7 +65,6 @@ def main(argv):
     
     expected = ['M', 'M', 'B']
     predict_x = {
-        'id':[926954, 927241, 92751], 
         'radius_mean':[16.6, 20.6, 7.76],
         'texture_mean':[28.08, 29.33, 24.54],
         'perimeter_mean':[108.3, 140.1, 47.92],

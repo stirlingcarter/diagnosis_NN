@@ -5,7 +5,7 @@ import tensorflow as tf
 
 ########################################## Need to change to our params
 
-CSV_COLUMN_NAMES = ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 
+CSV_COLUMN_NAMES = ['radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 
                     'compactness_mean', 'concavity_mean', 'concave_points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se',
                     'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave_points_se', 'symmetry_se',
                     'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst',
@@ -78,7 +78,7 @@ def eval_input_fn(features, labels, batch_size):
 #     the `record_defaults` argument.
 
 ########################################## need to convert to OUR column types
-CSV_TYPES = [[0],[0.0],[0.0],[0.0],[0.0],[0.0],[0.0], [0.0], [0.0], [0.0],[0.0],
+CSV_TYPES = [[0.0],[0.0],[0.0],[0.0],[0.0],[0.0], [0.0], [0.0], [0.0],[0.0],
                 [0.0],[0.0],[0.0],[0.0],[0.0],[0.0], [0.0], [0.0], [0.0],[0.0],
                 [0.0],[0.0],[0.0],[0.0],[0.0],[0.0], [0.0], [0.0], [0.0],[0.0], [0]]
 #############################################################################
@@ -88,7 +88,7 @@ def _parse_line(line):
 
     # Pack the result into a dictionary
     features = dict(zip(CSV_COLUMN_NAMES, fields))
-
+    
     # Separate the label from the features
     label = features.pop('diagnosis')
 
