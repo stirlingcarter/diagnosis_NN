@@ -11,7 +11,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-"""An Example of a DNNClassifier for the Cancer dataset."""
+"""A DNNClassifier for the Cancer dataset."""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -41,7 +41,13 @@ def main(argv):
     classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
         # Two hidden layers of 10 nodes each.
-        hidden_units=[10, 10],
+        hidden_units=[10, 20, 20, 10],
+        # Activation function applied to each layer
+        activation_fn=tf.keras.activations.relu,
+        # Choice of optimizer
+        optimizer=tf.train.AdagradOptimizer(learning_rate=0.1),
+        # Choice of loss reduction strategy
+        loss_reduction=tf.losses.Reduction.SUM,
         # The model must choose between 3 classes.
         n_classes=2)
 
