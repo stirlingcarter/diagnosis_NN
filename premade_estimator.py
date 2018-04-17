@@ -40,7 +40,7 @@ def main(argv):
     # Build 2 hidden layer DNN with 10, 10 units respectively.
     classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
-        # Two hidden layers of 10 nodes each.
+        # Four hidden layers of 10, 20, 20, and 10 nodes each
         hidden_units=[10, 20, 20, 10],
         # Activation function applied to each layer
         activation_fn=tf.keras.activations.relu,
