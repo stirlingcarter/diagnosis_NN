@@ -36,7 +36,11 @@ def main(argv):
     my_feature_columns = []
     for key in train_x.keys():
         my_feature_columns.append(tf.feature_column.numeric_column(key=key))
-
+    
+    # Set the checkpointing schedule to every 20 mins and retain the 50 most recent checkpoints.
+    my_checkpointing_config = tf.estimator.RunConfig(save_checkpoints_secs = 20*60,
+                                                     keep_checkpoint_max = 50)
+    
     # Build 2 hidden layer DNN with 10, 10 units respectively.
     classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
@@ -45,12 +49,16 @@ def main(argv):
         # Activation function applied to each layer
         activation_fn=tf.keras.activations.relu,
         # Choice of optimizer
-        optimizer=tf.train.AdagradOptimizer(learning_rate=0.1),
+        optimizer='Adagrad',
         # Choice of loss reduction strategy
         loss_reduction=tf.losses.Reduction.SUM,
         # The model must choose between 3 classes.
-        n_classes=2)
-
+        n_classes=2,
+        # Specifying directory that stores the model
+        model_dir='./model/',
+        # Specifying the configurations of checkpointing
+        config=my_checkpointing_config)
+    
     # Train the Model.
     classifier.train(
         input_fn=lambda:cancer_data.train_input_fn(train_x, train_y,
@@ -116,8 +124,7 @@ def main(argv):
 
         print(template.format(cancer_data.DIAGNOSIS[class_id],
                               100 * probability, expec))
-
-
+    
 if __name__ == '__main__':
     tf.logging.set_verbosity(tf.logging.INFO)
     tf.app.run(main)
