@@ -45,7 +45,10 @@ def train_input_fn(features, labels, batch_size):
     dataset = tf.data.Dataset.from_tensor_slices((dict(features), labels))
 
     # Shuffle, repeat, and batch the examples.
-    dataset = dataset.shuffle(1000).repeat().batch(batch_size)
+    # dataset = dataset.shuffle(1000).repeat().batch(batch_size)
+    
+    # Batch the examples without shuffling.
+    dataset = dataset.batch(batch_size)
 
     # Return the dataset.
     return dataset
@@ -103,7 +106,10 @@ def csv_input_fn(csv_path, batch_size):
     dataset = dataset.map(_parse_line)
 
     # Shuffle, repeat, and batch the examples.
-    dataset = dataset.shuffle(1000).repeat().batch(batch_size)
+    # dataset = dataset.shuffle(1000).repeat().batch(batch_size)
+    
+    # Batch the examples without shuffling.
+    dataset = dataset.batch(batch_size)
 
     # Return the dataset.
     return dataset
