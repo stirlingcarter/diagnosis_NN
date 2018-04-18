@@ -27,9 +27,10 @@ parser.add_argument('--train_steps', default=1000, type=int,
                     help='number of training steps')
 
 def main(argv):
+    
     args = parser.parse_args(argv[1:])
 
-    # Fetch the data
+    # Fetch the data.
     (train_x, train_y), (test_x, test_y) = cancer_data.load_data()
 
     # Feature columns describe how to use the input.
@@ -40,26 +41,26 @@ def main(argv):
     # Set the checkpointing schedule to every 20 mins and retain the 50 most recent checkpoints.
     my_checkpointing_config = tf.estimator.RunConfig(save_checkpoints_secs = 20*60,
                                                      keep_checkpoint_max = 50)
-    
-    # Build 2 hidden layer DNN with 10, 10 units respectively.
+
+    # Build a DNN.
     classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
-        # Four hidden layers of 10, 20, 20, and 10 nodes each
+        # Use 4 hidden layers of 10, 20, 20, and 10 nodes each.
         hidden_units=[10, 20, 20, 10],
-        # Activation function applied to each layer
+        # Use RELU as activation function for every layer.
         activation_fn=tf.keras.activations.relu,
-        # Choice of optimizer
+        # Use Adagrad optimizer.
         optimizer='Adagrad',
-        # Choice of loss reduction strategy
+        # Use sum as loss reduction strategy.
         loss_reduction=tf.losses.Reduction.SUM,
-        # The model must choose between 3 classes.
+        # Allow the model to choose between 2 labels.
         n_classes=2,
-        # Specifying directory that stores the model
+        # Specify directory that stores the model.
         model_dir='./model/',
-        # Specifying the configurations of checkpointing
+        # Set checkpointing configurations.
         config=my_checkpointing_config)
     
-    # Train the Model.
+    # Train the model.
     classifier.train(
         input_fn=lambda:cancer_data.train_input_fn(train_x, train_y,
                                                  args.batch_size),
@@ -73,10 +74,6 @@ def main(argv):
     print('\nTest set accuracy: {accuracy:0.3f}\n'.format(**eval_result))
 
     # Generate predictions from the model
-    # have to come out with own data for prediction and their expected outcome
-    # maybe can grab 3 from the data to be used for this
-    #expected = ['Setosa', 'Versicolor', 'Virginica']
-    
     expected = ['M', 'M', 'B']
     predict_x = {
         'radius_mean':[16.6, 20.6, 7.76],
@@ -124,7 +121,7 @@ def main(argv):
 
         print(template.format(cancer_data.DIAGNOSIS[class_id],
                               100 * probability, expec))
-    
+
 if __name__ == '__main__':
     tf.logging.set_verbosity(tf.logging.INFO)
     tf.app.run(main)
