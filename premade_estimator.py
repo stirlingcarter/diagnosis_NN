@@ -61,48 +61,19 @@ def main(argv):
         model_dir='./model/',
         # Set checkpointing configurations.
         config=my_checkpointing_config)
-
-    # my_list = []
-    """    folder = './model'
-        i = 0"""
-    # count = 0
-    
-    # while i < 0.97: 
-        
-    """if count >= 5 or i == 0.783:
-                    for the_file in os.listdir(folder):
-                        file_path = os.path.join(folder, the_file)
-                        try:
-                            if os.path.isfile(file_path):
-                                os.unlink(file_path)
-                            elif os.path.isdir(file_path): shutil.rmtree(file_path)
-                        except Exception as e:
-                            print(e)
-                    count = 0"""
                    
     # Train the model.
     """classifier.train(
             input_fn=lambda:cancer_data.train_input_fn(train_x, train_y,
                                                      args.batch_size),
-            steps=args.train_steps)
-    """
-
+            steps=args.train_steps)"""
 
     # Evaluate the model.
     eval_result = classifier.evaluate(
         input_fn=lambda:cancer_data.eval_input_fn(test_x, test_y,
                                                 args.batch_size))
             
-        # my_list.append('{accuracy:0.3f} '.format(**eval_result))
-        # i += 1
-    
-        # print('\nTest set accuracies: ')
-        # i = float('{accuracy:0.3f}'.format(**eval_result))
-        # for x in my_list:
     print('\nTest set accuracy: {accuracy:0.3f}\n'.format(**eval_result))
-        
-        # count += 1
-            # print(x)
 
     # Generate predictions from the model
     """expected = ['M', 'M', 'B']

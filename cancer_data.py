@@ -15,8 +15,8 @@ def maybe_download():
     """Specifies paths of train data and test data."""
     
     train_path = './traindata.csv'
-    test_path = './validationdata.csv'
-    # test_path = './testdata.csv'
+    # test_path = './validationdata.csv'
+    test_path = './testdata.csv'
 
     return train_path, test_path
 
